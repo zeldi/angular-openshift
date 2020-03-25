@@ -31,7 +31,7 @@ server {
 ```
 
 
-3. Create ``Dockerfile`` to myangular-app folder
+#### 3. Create ``Dockerfile`` to myangular-app folder
 
 ```yaml
 # stage 1
@@ -49,13 +49,13 @@ COPY --from=node /app/default.conf /etc/nginx/conf.d/
 EXPOSE 8080
 ```
 
-4. Push folder ``myangular-app`` to Git repo (e.g. https://github.com/zeldi/myangular)
+#### 4. Push folder ``myangular-app`` to Git repo (e.g. https://github.com/zeldi/myangular)
 
 ```
 # git push -u origin master
 ```
 
-5. Deploy Angular App to openshift
+#### 5. Deploy Angular App to openshift
 
 ```bash
 # oc new-app https://github.com/zeldi/myangular.git --name angular-app
@@ -95,7 +95,7 @@ $ oc new-app . --strategy=docker
 ```
 
 
-6. Check POD
+#### 6. Check POD
 
 ```bash
 $ oc get pod
