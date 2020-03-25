@@ -1,13 +1,12 @@
 ## Creating and Deploying Angular Apps on Openshift
 
-1. Create Sample Angular-App
+#### 1. Create Sample Angular-App
 
 ```bash
 $ ng new myangular-app
 ```
 
-2. Create Nginx default configuration (``default.conf``)
-
+#### 2. Create Nginx default configuration (``default.conf``)
 We will configure Nginx to listen on port 8080
 
 ```bash
