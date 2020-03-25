@@ -1,4 +1,4 @@
-## Create Deploying Angular Apps on Openshift
+## Creating and Deploying Angular Apps on Openshift
 
 1. Create Sample Angular-App
 
