@@ -1,0 +1,59 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  generation: 2
+  labels:
+    app: portal
+  name: portal
+  namespace: centurion
+spec:
+  replicas: 1
+  selector:
+    app: portal
+    deploymentconfig: portal
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: portal
+        deploymentconfig: portal
+    spec:
+      containers:
+        - image: >-
+            image-registry.openshift-image-registry.svc:5000/centurion/portal:latest
+          imagePullPolicy: Always
+          name: portal
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - portal
+        from:
+          kind: ImageStreamTag
+          name: 'portal:latest'
+          namespace: centurion
+          lastTriggeredImage: >-
+            image-registry.openshift-image-registry.svc:5000/centurion/portal:latest
+      type: ImageChange

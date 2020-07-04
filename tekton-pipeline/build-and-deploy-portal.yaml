@@ -1,0 +1,49 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: build-and-deploy-portal
+spec:
+  resources:
+    - name: portal-repo
+      type: git
+    - name: portal-image
+      type: image
+  tasks:
+    - name: build-portal
+      taskRef:
+        name: buildah
+        kind: ClusterTask
+      params:
+        - name: TLSVERIFY
+          value: "false"
+      resources:
+        inputs:
+          - name: source
+            resource: portal-repo
+        outputs:
+          - name: image
+            resource: portal-image
+
+    - name: apply-portal-manifests
+      taskRef:
+        name: apply-manifests
+      resources:
+        inputs:
+          - name: source
+            resource: portal-repo
+      runAfter:
+        - build-portal
+    - name: update-portal-image
+      taskRef:
+        name: update-deployment
+      resources:
+        inputs:
+          - name: image
+            resource: portal-image
+      params:
+        - name: deployment
+          value: "portal"
+      runAfter:
+        - apply-portal-manifests
+
+

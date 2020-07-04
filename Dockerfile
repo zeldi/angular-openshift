@@ -8,6 +8,9 @@ RUN npm run build --prod
 
 # stage 2
 FROM nginx:alpine
+RUN adduser node
+
 COPY --from=node /app/dist/ /usr/share/nginx/html
 COPY --from=node /app/default.conf /etc/nginx/conf.d/
+
 EXPOSE 8080
