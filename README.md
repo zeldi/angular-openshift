@@ -1,4 +1,7 @@
-## Creating and Deploying Angular Apps on Openshift
+# Creating and Deploying Angular Apps on Openshift
+
+## Scope
+I wanted to create a demo angular app to work on k8s, and OpenShift.
 
 #### 1. Create Sample Angular-App
 
